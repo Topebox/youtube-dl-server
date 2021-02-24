@@ -35,8 +35,8 @@ app.get('/v1/video/urlonly', async (req, res) => {
             res.send('Missing url');
             return;
         }
-        const metadata = await YoutubeDl.getVideoMetadata(url, options);
-        res.json(metadata);
+        const metadata = await YoutubeDl.getVideoURL(url, options);
+        res.send(metadata);
     } catch (e) {
         console.error(e)
         res.status(500);
