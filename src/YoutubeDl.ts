@@ -23,4 +23,22 @@ export class YoutubeDl {
             });
         });
     }
+    
+     public static async getVideoURL(url: string, options?: string) {
+        options = options ||  '-f \"best\"';
+        const command = `${bin} ${options} --dump-json ${url}`;
+        return await new Promise<any>((resolve, reject) => {
+            exec(command, (error: ExecException | null, stdout: string, stderr: string) => {
+                if(error) {
+                    reject({error: error.message, stderr, stdout});
+                    return
+                }
+                try {
+                    resolve(JSON.parse(stdout).url);
+                } catch (e) {
+                    reject({error: e, stderr, stdout});
+                }
+            });
+        });
+    }
 }
